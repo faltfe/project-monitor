@@ -1,8 +1,13 @@
 package de.faltfe.vacation.entities;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -12,13 +17,46 @@ public class Person {
     @GeneratedValue
     public Long id;
 
-    @Column
+    @Column(nullable = false)
     public String name;
 
-    @Column
+    @Column(nullable = false, unique = true)
     public String email;
 
     @JoinColumn(name = "company_id")
     @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
     public Company company;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "persons")
+    @EqualsAndHashCode.Exclude
+    @Setter(AccessLevel.NONE)
+    public Set<Project> projects = new HashSet<>();
+
+    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    public VacationQuota vacationQuota;
+
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @Setter(AccessLevel.NONE)
+    public Set<VacationEntry> vacationEntries;
+
+    public void addProject(Project project) {
+        projects.add(project);
+        project.getPersons().add(this);
+    }
+
+    public void removeProject(Project project) {
+        projects.remove(project);
+        project.getPersons().remove(this);
+    }
+
+    public void addVacation(VacationEntry vacationEntry) {
+        vacationEntries.add(vacationEntry);
+        vacationEntry.setPerson(this);
+    }
+
+    public void removeVacation(VacationEntry vacationEntry) {
+        vacationEntries.remove(vacationEntry);
+        vacationEntry.setPerson(null);
+    }
 }
