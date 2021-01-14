@@ -38,7 +38,7 @@ public class Person {
 
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
-    public Set<VacationEntry> vacationEntries;
+    public Set<VacationEntry> vacations = new HashSet<>();
 
     public void addProject(Project project) {
         projects.add(project);
@@ -51,12 +51,12 @@ public class Person {
     }
 
     public void addVacation(VacationEntry vacationEntry) {
-        vacationEntries.add(vacationEntry);
+        vacations.add(vacationEntry);
         vacationEntry.setPerson(this);
     }
 
     public void removeVacation(VacationEntry vacationEntry) {
-        vacationEntries.remove(vacationEntry);
+        vacations.remove(vacationEntry);
         vacationEntry.setPerson(null);
     }
 }
