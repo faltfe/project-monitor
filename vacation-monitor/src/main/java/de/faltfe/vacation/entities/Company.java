@@ -15,6 +15,8 @@ public class Company {
 
     @Id
     @GeneratedValue
+    @Column(unique = true, nullable = false, updatable = false)
+    @Setter(AccessLevel.NONE)
     public Long id;
 
     @Column(nullable = false, unique = true)

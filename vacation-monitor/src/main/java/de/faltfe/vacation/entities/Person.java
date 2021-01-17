@@ -15,6 +15,8 @@ public class Person {
 
     @Id
     @GeneratedValue
+    @Column(unique = true, nullable = false, updatable = false)
+    @Setter(AccessLevel.NONE)
     public Long id;
 
     @Column(nullable = false)

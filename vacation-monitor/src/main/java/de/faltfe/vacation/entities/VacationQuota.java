@@ -1,6 +1,8 @@
 package de.faltfe.vacation.entities;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -10,6 +12,7 @@ public class VacationQuota {
 
     @Id
     @GeneratedValue
+    @Setter(AccessLevel.NONE)
     public Long id;
 
     @Column(nullable = false)
