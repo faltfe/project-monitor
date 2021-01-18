@@ -1,6 +1,5 @@
-package de.faltfe.vacation;
+package de.faltfe.vacation.config;
 
-import de.faltfe.vacation.config.VacationConfiguration;
 import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;

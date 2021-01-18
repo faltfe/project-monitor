@@ -3,7 +3,6 @@ package de.faltfe.vacation.services;
 import de.faltfe.vacation.entities.Person;
 import de.faltfe.vacation.entities.VacationEntry;
 import de.faltfe.vacation.repositories.PersonRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -12,8 +11,11 @@ import java.util.Set;
 @Service
 public class VacationService {
 
-    @Autowired
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
+
+    public VacationService(PersonRepository personRepository) {
+        this.personRepository = personRepository;
+    }
 
     public Set<VacationEntry> getVacations(Long personId) {
         return personRepository.findById(personId)

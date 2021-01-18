@@ -11,7 +11,7 @@ import javax.persistence.*;
 public class VacationQuota {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     public Long id;
 

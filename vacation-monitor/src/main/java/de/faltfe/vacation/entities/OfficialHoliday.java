@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class OfficialHoliday {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)

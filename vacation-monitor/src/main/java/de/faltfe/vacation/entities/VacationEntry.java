@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class VacationEntry {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
     public Long id;

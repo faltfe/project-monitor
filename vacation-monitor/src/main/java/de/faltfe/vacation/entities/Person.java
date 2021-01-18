@@ -11,7 +11,7 @@ import java.util.Set;
 public class Person {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
     public Long id;
