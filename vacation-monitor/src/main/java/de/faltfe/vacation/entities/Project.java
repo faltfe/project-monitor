@@ -1,9 +1,6 @@
 package de.faltfe.vacation.entities;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -28,6 +25,7 @@ public class Project {
             joinColumns = @JoinColumn(name = "project_id"),
             inverseJoinColumns = @JoinColumn(name = "person_id"))
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @Setter(AccessLevel.NONE)
     public Set<Person> persons = new HashSet<>();
 

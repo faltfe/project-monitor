@@ -1,9 +1,6 @@
 package de.faltfe.vacation.entities;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -31,8 +28,9 @@ public class Person {
     public Company company;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "persons")
-    @EqualsAndHashCode.Exclude
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     public Set<Project> projects = new HashSet<>();
 
     @OneToOne(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -40,6 +38,8 @@ public class Person {
 
     @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
     @Setter(AccessLevel.NONE)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     public Set<VacationEntry> vacations = new HashSet<>();
 
     public void addProject(Project project) {

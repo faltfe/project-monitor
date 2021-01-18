@@ -29,7 +29,7 @@ public class VacationEntry {
     private VacationStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id", nullable = false)
+    @JoinColumn(name = "person_id", nullable = false, updatable = false)
     @EqualsAndHashCode.Exclude
     public Person person;
 }
