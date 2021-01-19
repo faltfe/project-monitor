@@ -26,7 +26,7 @@ public class Company {
     @Enumerated(EnumType.STRING)
     public FederalState federalState;
 
-    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @Setter(AccessLevel.NONE)
     public Set<Person> persons = new HashSet<>();

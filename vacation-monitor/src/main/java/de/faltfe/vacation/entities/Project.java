@@ -20,10 +20,12 @@ public class Project {
     public String title;
 
     @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+        cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "project_person",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "person_id"))
+        joinColumns = @JoinColumn(name = "project_id"),
+        inverseJoinColumns = @JoinColumn(name = "person_id"),
+        uniqueConstraints = @UniqueConstraint(columnNames = {"project_id", "person_id"})
+    )
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Setter(AccessLevel.NONE)

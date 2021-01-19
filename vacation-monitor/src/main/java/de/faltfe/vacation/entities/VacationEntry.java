@@ -26,7 +26,7 @@ public class VacationEntry {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private VacationStatus status;
+    private VacationStatus status = VacationStatus.REQUESTED;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "person_id", nullable = false, updatable = false)

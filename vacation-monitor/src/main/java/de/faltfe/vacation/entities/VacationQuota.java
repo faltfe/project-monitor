@@ -7,11 +7,13 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"person_id", "year"}))
 @Data
 public class VacationQuota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(unique = true, nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
     public Long id;
 
@@ -22,7 +24,7 @@ public class VacationQuota {
     public int total;
 
     @Column(nullable = false)
-    public int carryOver = 0;
+    public int carryover = 0;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId

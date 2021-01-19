@@ -25,6 +25,7 @@ public class Person {
     @JoinColumn(name = "company_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     public Company company;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "persons")
@@ -36,7 +37,7 @@ public class Person {
     @OneToOne(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public VacationQuota vacationQuota;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
