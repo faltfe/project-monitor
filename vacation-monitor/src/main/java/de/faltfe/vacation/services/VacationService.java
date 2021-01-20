@@ -5,8 +5,11 @@ import de.faltfe.vacation.entities.VacationEntry;
 import de.faltfe.vacation.repositories.PersonRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Set;
+
+import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
 
 @Service
 public class VacationService {
@@ -30,6 +33,8 @@ public class VacationService {
                             person.addVacation(vacationEntry);
                             personRepository.save(person);
                         });
+
+        LocalDate.now().withYear(2020).with(lastDayOfYear()).atStartOfDay();
     }
 
     public void removeVacation(Long personId, VacationEntry vacationEntry) {
