@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"date", "description"}))
+@Table(name = "official_holiday", uniqueConstraints = @UniqueConstraint(columnNames = {"date", "description"}))
 @Data
 public class OfficialHoliday {
 
