@@ -15,18 +15,18 @@ public class VacationQuota {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false)
-    public int year;
+    private int year;
 
     @Column(nullable = false)
-    public int total;
+    private int total;
 
     @Column(nullable = false)
-    public int carryover = 0;
+    private int carryover = 0;
 
     @OneToOne(fetch = FetchType.LAZY)
     @MapsId
-    public Person person;
+    private Person person;
 }

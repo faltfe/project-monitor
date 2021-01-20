@@ -14,10 +14,10 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
-    public String title;
+    private String title;
 
     @ManyToMany(fetch = FetchType.LAZY,
         cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -29,7 +29,7 @@ public class Project {
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     @Setter(AccessLevel.NONE)
-    public Set<Person> persons = new HashSet<>();
+    private Set<Person> persons = new HashSet<>();
 
     public void addPerson(Person person) {
         persons.add(person);

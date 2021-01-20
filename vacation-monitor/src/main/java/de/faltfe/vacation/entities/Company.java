@@ -1,9 +1,6 @@
 package de.faltfe.vacation.entities;
 
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -17,19 +14,20 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false, unique = true)
-    public String name;
+    private String name;
 
     @Column
     @Enumerated(EnumType.STRING)
-    public FederalState federalState;
+    private FederalState federalState;
 
     @OneToMany(mappedBy = "company", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @Setter(AccessLevel.NONE)
-    public Set<Person> persons = new HashSet<>();
+    private Set<Person> persons = new HashSet<>();
 
     public void addPerson(Person person) {
         persons.add(person);

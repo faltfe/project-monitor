@@ -14,36 +14,36 @@ public class Person {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(unique = true, nullable = false, updatable = false)
     @Setter(AccessLevel.NONE)
-    public Long id;
+    private Long id;
 
     @Column(nullable = false)
-    public String name;
+    private String name;
 
     @Column(nullable = false, unique = true)
-    public String email;
+    private String email;
 
     @JoinColumn(name = "company_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    public Company company;
+    private Company company;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "persons")
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    public Set<Project> projects = new HashSet<>();
+    private Set<Project> projects = new HashSet<>();
 
-    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    public VacationQuota vacationQuota;
+    private VacationQuota vacationQuota;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @Setter(AccessLevel.NONE)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    public Set<VacationEntry> vacations = new HashSet<>();
+    private Set<VacationEntry> vacations = new HashSet<>();
 
     public void addProject(Project project) {
         projects.add(project);
