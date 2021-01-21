@@ -35,7 +35,7 @@ public class Company {
     }
 
     public void removePerson(Person person) {
-        persons.remove(person);
+        persons.removeIf(p -> p.getId().equals(person.getId()));
         person.setCompany(null);
     }
 }

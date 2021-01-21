@@ -3,12 +3,13 @@ package de.faltfe.vacation.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "vacation_entry")
 @Data
-public class VacationEntry {
+public class VacationEntry implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +28,8 @@ public class VacationEntry {
     private VacationStatus status = VacationStatus.REQUESTED;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id", nullable = false, updatable = false)
+    @JoinColumn(name = "person_id")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    public Person person;
+    private Person person;
 }

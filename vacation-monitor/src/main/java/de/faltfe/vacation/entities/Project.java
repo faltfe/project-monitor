@@ -37,7 +37,7 @@ public class Project {
     }
 
     public void removePerson(Person person) {
-        persons.remove(person);
+        persons.removeIf(p -> p.getId().equals(person.getId()));
         person.getProjects().remove(this);
     }
 }

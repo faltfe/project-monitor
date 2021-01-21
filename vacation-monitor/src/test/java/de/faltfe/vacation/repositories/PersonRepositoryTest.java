@@ -1,28 +1,28 @@
 package de.faltfe.vacation.repositories;
 
-import de.faltfe.vacation.config.EnableVacationJpaTest;
 import de.faltfe.vacation.entities.Person;
 import de.faltfe.vacation.entities.VacationEntry;
 import de.faltfe.vacation.entities.VacationQuota;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@EnableVacationJpaTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DataJpaTest
 class PersonRepositoryTest {
 
     @Autowired
     private PersonRepository personRepository;
 
-    @Autowired
+    @PersistenceContext
     private EntityManager entityManager;
 
     @Test
@@ -51,6 +51,32 @@ class PersonRepositoryTest {
         );
         quotaQuery.setParameter(1, person.getId());
         assertThrows(NoResultException.class, quotaQuery::getSingleResult);
+    }
+
+    @Test
+    void testSaveAndDeleteVacationOrphaned() {
+        VacationEntry vacation = new VacationEntry();
+        Person person = personRepository.findById(1L).orElseThrow(AssertionError::new);
+        person.addVacation(vacation);
+
+        vacation.setStartDate(LocalDate.now());
+        vacation.setEndDate(LocalDate.now());
+
+        Person savedPerson = personRepository.saveAndFlush(person);
+
+        Person personWithVacation = personRepository.findById(savedPerson.getId()).orElseThrow(AssertionError::new);
+        assertEquals(1, personWithVacation.getVacations().size());
+        assertTrue(personWithVacation.getVacations().stream().map(VacationEntry::getId).noneMatch(Objects::isNull));
+        personWithVacation.getVacations().forEach(personWithVacation::removeVacation);
+//        VacationEntry vacationToDelete = savedPerson.getVacations().iterator().next();
+//        personWithVacation.removeVacation(vacationToDelete);
+        personRepository.save(personWithVacation);
+
+        Person personWithoutVacation = personRepository.findById(savedPerson.getId()).orElseThrow(AssertionError::new);
+        assertTrue(personWithoutVacation.getVacations().isEmpty());
+
+        TypedQuery<VacationEntry> query = entityManager.createQuery("Select v from VacationEntry v", VacationEntry.class);
+        assertTrue(query.getResultList().isEmpty());
     }
 
 }

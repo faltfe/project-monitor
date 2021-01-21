@@ -3,12 +3,13 @@ package de.faltfe.vacation.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
-public class Person {
+public class Person implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,10 +40,10 @@ public class Person {
     @ToString.Exclude
     private VacationQuota vacationQuota;
 
-    @OneToMany(mappedBy = "person", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Setter(AccessLevel.NONE)
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "person")
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
+    @Setter(AccessLevel.NONE)
     private Set<VacationEntry> vacations = new HashSet<>();
 
     public void addProject(Project project) {
@@ -51,7 +52,7 @@ public class Person {
     }
 
     public void removeProject(Project project) {
-        projects.remove(project);
+        projects.removeIf(p -> p.getId().equals(project.getId()));
         project.getPersons().remove(this);
     }
 
@@ -61,7 +62,7 @@ public class Person {
     }
 
     public void removeVacation(VacationEntry vacationEntry) {
-        vacations.remove(vacationEntry);
+        vacations.removeIf(element -> element.getId().equals(vacationEntry.getId()));
         vacationEntry.setPerson(null);
     }
 }
