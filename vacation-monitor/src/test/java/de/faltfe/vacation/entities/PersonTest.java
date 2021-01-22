@@ -1,22 +1,24 @@
 package de.faltfe.vacation.entities;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class PersonTest {
 
+    @Spy
     private Person person;
-    private Project project;
-    private VacationEntry vacationEntry;
 
-    @BeforeEach
-    public void initTest() {
-        person = new Person();
-        project = new Project();
-        vacationEntry = new VacationEntry();
-    }
+    @Spy
+    private Project project;
+
+    @Spy
+    private VacationEntry vacationEntry;
 
     @Test
     void addProject() {
@@ -27,6 +29,7 @@ class PersonTest {
 
     @Test
     void removeProject() {
+        when(project.getId()).thenReturn(1L);
         person.addProject(project);
         person.removeProject(project);
         assertTrue(person.getProjects().isEmpty());
@@ -42,6 +45,7 @@ class PersonTest {
 
     @Test
     void removeVacation() {
+        when(vacationEntry.getId()).thenReturn(1L);
         person.addVacation(vacationEntry);
         person.removeVacation(vacationEntry);
         assertTrue(person.getVacations().isEmpty());

@@ -26,7 +26,7 @@ public class VacationQuota {
     @Column(nullable = false)
     private int carryover = 0;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, optional = false)
     @MapsId
     private Person person;
 }

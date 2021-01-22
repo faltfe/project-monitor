@@ -27,8 +27,8 @@ public class VacationEntry implements Serializable {
     @Enumerated(EnumType.STRING)
     private VacationStatus status = VacationStatus.REQUESTED;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "person_id", updatable = false)
     @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Person person;

@@ -68,8 +68,6 @@ class PersonRepositoryTest {
         assertEquals(1, personWithVacation.getVacations().size());
         assertTrue(personWithVacation.getVacations().stream().map(VacationEntry::getId).noneMatch(Objects::isNull));
         personWithVacation.getVacations().forEach(personWithVacation::removeVacation);
-//        VacationEntry vacationToDelete = savedPerson.getVacations().iterator().next();
-//        personWithVacation.removeVacation(vacationToDelete);
         personRepository.save(personWithVacation);
 
         Person personWithoutVacation = personRepository.findById(savedPerson.getId()).orElseThrow(AssertionError::new);
