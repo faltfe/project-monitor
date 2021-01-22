@@ -23,7 +23,8 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2  
     - name: Build with Maven
-      run: mvn -B verify --file pom.xml
+      working-directory: vacation-monitor
+      run: mvn -B verify
     - name: Upload to Codecov
       uses: codecov/codecov-action@v1.2.1
       with:
