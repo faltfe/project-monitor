@@ -67,6 +67,7 @@ class VacationServiceTest {
     void addVacation() {
         when(person.getId()).thenReturn(1L);
         when(personRepository.findById(anyLong())).thenReturn(Optional.of(person));
+        vacationEntry.setPerson(person);
         vacationService.addVacation(person.getId(), vacationEntry);
         verify(person).addVacation(vacationCaptor.capture());
         verify(personRepository).save(personCaptor.capture());
@@ -89,6 +90,7 @@ class VacationServiceTest {
     void removeVacation() {
         when(person.getId()).thenReturn(1L);
         when(personRepository.findById(anyLong())).thenReturn(Optional.of(person));
+        vacationEntry.setPerson(person);
         vacationService.removeVacation(person.getId(), vacationEntry);
         verify(person).removeVacation(vacationCaptor.capture());
         verify(personRepository).save(personCaptor.capture());
@@ -119,6 +121,7 @@ class VacationServiceTest {
         VacationEntry updatedEntry = spy(VacationEntry.class);
         when(updatedEntry.getId()).thenReturn(1L);
         updatedEntry.setStatus(VacationStatus.APPROVED);
+        updatedEntry.setPerson(person);
 
         vacationService.updateVacation(person.getId(), updatedEntry);
         verify(person).removeVacation(any(VacationEntry.class));
@@ -145,18 +148,25 @@ class VacationServiceTest {
     }
 
     @Test
-    void updateVacationNoVacationFound() {
-        when(person.getId()).thenReturn(1L);
+    void updateVacationNewVacation() {
         when(personRepository.findById(anyLong())).thenReturn(Optional.of(person));
-        when(vacationEntry.getId()).thenReturn(1L);
-        when(person.getVacations()).thenReturn(Set.of(vacationEntry));
 
-        VacationEntry updatedEntry = spy(VacationEntry.class);
-        when(updatedEntry.getId()).thenReturn(2L);
-
-        vacationService.updateVacation(person.getId(), updatedEntry);
+        vacationService.updateVacation(1L, vacationEntry);
         verify(person, never()).removeVacation(any(VacationEntry.class));
         verify(person, never()).addVacation(any(VacationEntry.class));
-        verifyNoMoreInteractions(personRepository);
+    }
+
+    @Test
+    void updateVacationMismatchPersonId() {
+        when(person.getId()).thenReturn(1L);
+        when(vacationEntry.getId()).thenReturn(1L);
+        vacationEntry.setPerson(person);
+
+        when(personRepository.findById(anyLong())).thenReturn(Optional.of(person));
+
+        vacationService.updateVacation(person.getId() + 1, vacationEntry);
+        verify(person, never()).removeVacation(any(VacationEntry.class));
+        verify(person, never()).addVacation(any(VacationEntry.class));
+
     }
 }
