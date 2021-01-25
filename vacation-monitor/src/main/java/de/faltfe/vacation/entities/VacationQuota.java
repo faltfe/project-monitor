@@ -5,11 +5,12 @@ import lombok.Data;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "vacation_quota", uniqueConstraints = @UniqueConstraint(columnNames = {"person_id", "year"}))
 @Data
-public class VacationQuota {
+public class VacationQuota implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,12 +3,13 @@ package de.faltfe.vacation.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Data
-public class Company {
+public class Company implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
