@@ -21,9 +21,10 @@ values (@project);
 insert into COMPANY (FEDERAL_STATE, NAME)
 values ('Niedersachsen', @company);
 
--- OfficialHolidays
-insert into OFFICIAL_HOLIDAY (DATE, DESCRIPTION, FEDERAL_STATE)
+-- OfficialHolidays 11 (+ 1 NI)
+insert into PUBLIC_HOLIDAY (DATE, DESCRIPTION, FEDERAL_STATE)
 VALUES ('2019-01-01', 'Neujahr', null),
+       ('2019-01-02', 'Fake', 'NI'),
        ('2019-04-19', 'Karfreitag', null),
        ('2019-04-21', 'Ostersonntag', null),
        ('2019-04-22', 'Ostermontag', null),

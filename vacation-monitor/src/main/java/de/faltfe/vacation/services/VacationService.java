@@ -1,12 +1,11 @@
 package de.faltfe.vacation.services;
 
-import de.faltfe.vacation.entities.FederalState;
-import de.faltfe.vacation.entities.OfficialHoliday;
+import de.faltfe.vacation.entities.PublicHoliday;
 import de.faltfe.vacation.entities.Person;
 import de.faltfe.vacation.entities.VacationEntry;
 import de.faltfe.vacation.exceptions.PersonNotFoundException;
-import de.faltfe.vacation.repositories.OfficialHolidayRepository;
 import de.faltfe.vacation.repositories.PersonRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -18,23 +17,18 @@ import static java.time.temporal.TemporalAdjusters.firstDayOfYear;
 import static java.time.temporal.TemporalAdjusters.lastDayOfYear;
 
 @Service
+@RequiredArgsConstructor
 public class VacationService {
 
     private final PersonRepository personRepository;
 
-    private final OfficialHolidayRepository officialHolidayRepository;
-
-    public VacationService(PersonRepository personRepository, OfficialHolidayRepository officialHolidayRepository) {
-        this.personRepository = personRepository;
-        this.officialHolidayRepository = officialHolidayRepository;
-    }
+    private final PublicHolidayService publicHolidayService;
 
     public Set<VacationEntry> getVacations(Long personId) {
         return personRepository.findById(personId).map(Person::getVacations).orElseGet(Collections::emptySet);
     }
 
     public void addVacation(Long personId, VacationEntry vacationEntry) {
-        // TODO Remove or extent vacation entry if dates collide
         addVacations(personId, List.of(vacationEntry));
     }
 
@@ -90,8 +84,11 @@ public class VacationService {
                     .collect(Collectors.toCollection(() -> vacationEntries));
 
         });
-        List<LocalDate> officialHolidays = getOfficialHolidays(person.getCompany().getFederalState(), from, to);
-        return vacationEntries.stream()
+        List<LocalDate> officialHolidays = publicHolidayService.getPublicHolidays(from, to, person.getCompany().getFederalState())
+                                                               .stream()
+                                                               .map(PublicHoliday::getDate)
+                                                               .collect(Collectors.toList());
+        return vacationEntries.parallelStream()
                               .filter(date -> date.isAfter(from) || date.isEqual(from))
                               .filter(date -> date.isBefore(to) || date.isEqual(to))
                               .filter(date -> date.getDayOfWeek() != DayOfWeek.SATURDAY)
@@ -105,10 +102,4 @@ public class VacationService {
         return getVacationDays(personId, date.with(firstDayOfYear()), date.with(lastDayOfYear()));
     }
 
-    private List<LocalDate> getOfficialHolidays(FederalState federalState, LocalDate from, LocalDate to) {
-        return officialHolidayRepository.findAllByDateBetweenAndFederalState(from, to, federalState)
-                                        .stream()
-                                        .map(OfficialHoliday::getDate)
-                                        .collect(Collectors.toList());
-    }
 }
