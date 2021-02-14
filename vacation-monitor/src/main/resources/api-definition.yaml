@@ -1,0 +1,56 @@
+openapi: 3.0.3
+info:
+  title: Vacation Monitor API
+  description: Vacation Monitor API
+  version: 1.0.0
+servers:
+  - url: 'https'
+paths:
+  /login:
+    post:
+      responses:
+        '200':
+          description: OK
+  /persons:
+    get:
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+    post:
+      description: Add person
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+  /persons/{personId}:
+    put:
+      description: Update person
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+    delete:
+      description: Delete person
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+  /persons/{personId}/vacations:
+    get:
+      description: Get all vacation from this person
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+    post:
+      description: Add vacation
+      responses:
+        200:
+          $ref: '#/components/responses/200'
+
+components:
+  responses:
+    200:
+      description: 200 return status
+      content:
+        application/json:
+          schema:
+            description: OK
+
+

@@ -84,7 +84,8 @@ public class VacationService {
                     .collect(Collectors.toCollection(() -> vacationEntries));
 
         });
-        List<LocalDate> officialHolidays = publicHolidayService.getPublicHolidays(from, to, person.getCompany().getFederalState())
+        List<LocalDate> officialHolidays = publicHolidayService.getPublicHolidays(from, to, person.getCompany()
+                                                                                                  .getFederalState())
                                                                .stream()
                                                                .map(PublicHoliday::getDate)
                                                                .collect(Collectors.toList());

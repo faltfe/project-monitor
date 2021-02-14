@@ -19,7 +19,11 @@ public class PersonService {
         return personRepository.findAll();
     }
 
-    public Person save(Person person) {
+    public Person addPerson(Person person) {
         return personRepository.save(person);
-    };
+    }
+
+    public void deletePerson(Person person) {
+        personRepository.deleteById(person.getId());
+    }
 }
