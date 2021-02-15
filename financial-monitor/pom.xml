@@ -3,32 +3,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.2</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>de.faltfe</groupId>
+        <artifactId>project-monitor</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <groupId>de.faltfe</groupId>
     <artifactId>financial-monitor</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>financial-monitor</name>
+    <name>Financial Monitor</name>
     <description>Demo project for Spring Boot</description>
-    <properties>
-        <java.version>11</java.version>
-        <spring-cloud.version>2020.0.1</spring-cloud.version>
-    </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
