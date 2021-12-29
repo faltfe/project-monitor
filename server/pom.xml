@@ -9,34 +9,24 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.faltfe</groupId>
-    <artifactId>gateway</artifactId>
+    <artifactId>projectmonitor</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>gateway</name>
-    <description>Demo project for Spring Boot</description>
+    <name>Project Monitor</name>
+    <packaging>pom</packaging>
+
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2020.0.1</spring-cloud.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <modules>
+        <module>gateway</module>
+        <module>discovery-service</module>
+        <module>financial-monitor</module>
+        <module>vacation-monitor</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -48,14 +38,4 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
