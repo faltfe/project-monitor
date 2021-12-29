@@ -5,10 +5,6 @@ name: Financial Monitor
 
 on: [push, pull_request ]
 
-defaults:
-  run:
-    working-directory: server/financial-monitor
-
 jobs:
   build:
 
@@ -27,12 +23,13 @@ jobs:
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2  
     - name: Build and test with Maven
+      working-directory: server/financial-monitor
       run: mvn -B verify
     - name: Upload to Codecov
       uses: codecov/codecov-action@v2
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        directory: ./target/site/jacoco
-        file: ./jacoco.xml
+        files: ./server/financial-monitor/target/site/jacoco/jacoco.xml
         flags: financial-monitor
+        fail_ci_if_error: true
         verbose: true
