@@ -1,0 +1,30 @@
+server:
+    port: 8081
+spring:
+    application:
+        name: project-monitor
+    datasource:
+        driverClassName: org.h2.Driver
+        password: 'null'
+        url: jdbc:h2:mem:testdb
+        username: sa
+    h2:
+        console:
+            enabled: true
+    jpa:
+        database-platform: org.hibernate.dialect.H2Dialect
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                format_sql: true
+                generate_statistics: true
+                jdbc:
+                    time_zone: UTC
+        show-sql: true
+    main:
+        banner-mode: 'off'
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: ${EUREKA_SERVER:http://localhost:8761/eureka}
