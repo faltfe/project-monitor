@@ -1,10 +1,46 @@
 version: '3.8'
 services:
+    postgres:
+        container_name: postgres
+        image: postgres
+        environment:
+            POSTGRES_USER: ${POSTGRES_USER:-root}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+            PGDATA: /data/postgres
+        volumes:
+            - postgres:/data/postgres
+            - ./database:/docker-entrypoint-initdb.d/
+        ports:
+            - "5432:5432"
+        networks:
+            - postgres
+        restart: unless-stopped
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+    pgadmin:
+        container_name: pgadmin
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+            PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+            PGADMIN_CONFIG_SERVER_MODE: 'False'
+        volumes:
+            - pgadmin:/var/lib/pgadmin
+        ports:
+            - "5050:80"
+        networks:
+            - postgres
+        restart: unless-stopped
     discovery:
         image: faltfe/project-monitor-discovery
         build:
             context: ./discovery-service
         container_name: discovery
+        profiles:
+            - application
         restart: unless-stopped
         ports:
             - "8761:8761"
@@ -15,6 +51,8 @@ services:
         build:
             context: ./gateway
         container_name: gateway
+        profiles:
+            - application
         environment:
             - JAVA_OPTS=
                 -DEUREKA_SERVER=http://discovery:8761/eureka
@@ -31,6 +69,8 @@ services:
         build:
             context: ./vacation-monitor
         container_name: vacation-monitor
+        profiles:
+            - services
         environment:
             - JAVA_OPTS=
                 -DEUREKA_SERVER=http://discovery:8761/eureka
@@ -40,13 +80,18 @@ services:
         depends_on:
             gateway:
                 condition: service_healthy
+            postgres:
+                condition: service_healthy
         networks:
             - project-monitor
+            - postgres
     financial-monitor:
         image: faltfe/project-monitor-financial-monitor
         build:
             context: ./financial-monitor
         container_name: financial-monitor
+        profiles:
+            - services
         environment:
             - JAVA_OPTS=
                 -DEUREKA_SERVER=http://discovery:8761/eureka
@@ -56,8 +101,17 @@ services:
         depends_on:
             gateway:
                 condition: service_healthy
+            postgres:
+                condition: service_healthy
         networks:
             - project-monitor
+            - postgres
 networks:
     project-monitor:
-        name: project-monitor
+        driver: bridge
+    postgres:
+        driver: bridge
+
+volumes:
+    postgres:
+    pgadmin:
