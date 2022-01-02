@@ -1,0 +1,63 @@
+version: '3.8'
+services:
+    discovery:
+        image: faltfe/project-monitor-discovery
+        build:
+            context: ./discovery-service
+        container_name: discovery
+        restart: unless-stopped
+        ports:
+            - "8761:8761"
+        networks:
+            - project-monitor
+    gateway:
+        image: faltfe/project-monitor-gateway
+        build:
+            context: ./gateway
+        container_name: gateway
+        environment:
+            - JAVA_OPTS=
+                -DEUREKA_SERVER=http://discovery:8761/eureka
+        restart: unless-stopped
+        ports:
+            - "8080:8080"
+        depends_on:
+            discovery:
+                condition: service_healthy
+        networks:
+            - project-monitor
+    vacation-monitor:
+        image: faltfe/project-monitor-vacation-monitor
+        build:
+            context: ./vacation-monitor
+        container_name: vacation-monitor
+        environment:
+            - JAVA_OPTS=
+                -DEUREKA_SERVER=http://discovery:8761/eureka
+        restart: on-failure
+        ports:
+            - "8081:8081"
+        depends_on:
+            gateway:
+                condition: service_healthy
+        networks:
+            - project-monitor
+    financial-monitor:
+        image: faltfe/project-monitor-financial-monitor
+        build:
+            context: ./financial-monitor
+        container_name: financial-monitor
+        environment:
+            - JAVA_OPTS=
+                -DEUREKA_SERVER=http://discovery:8761/eureka
+        restart: on-failure
+        ports:
+            - "8082:8082"
+        depends_on:
+            gateway:
+                condition: service_healthy
+        networks:
+            - project-monitor
+networks:
+    project-monitor:
+        name: project-monitor
