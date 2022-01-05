@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "cypress:open": "cypress open",
-    "cypress:run": "cypress run"
+    "cypress:run": "cypress run",
+    "postcypress:run": "node cucumber-html-report.js"
   },
   "private": true,
   "dependencies": {
@@ -51,6 +52,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "latest",
+    "multiple-cucumber-html-reporter": "^1.18.3",
     "prettier": "^2.5.1",
     "typescript": "~4.5.2"
   },
@@ -59,7 +61,7 @@
     "cucumberJson": {
       "generate": true,
       "outputFolder": "cypress/cucumber-json",
-      "filePrefix": "cypress-",
+      "filePrefix": "",
       "fileSuffix": ".cucumber"
     }
   }
