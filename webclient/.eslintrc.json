@@ -1,6 +1,9 @@
 {
   "root": true,
   "ignorePatterns": ["polyfills.ts"],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
   "overrides": [
     {
       "files": ["*.ts"],

@@ -1,0 +1,4 @@
+* text=auto eol=crlf
+*.html eol=lf
+*.ts eol=lf
+*.sh eol=lf

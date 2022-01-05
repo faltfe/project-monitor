@@ -3,6 +3,7 @@
 /cypress/screenshots
 /cypress/videos
 /cypress/cucumber-json
+/reports
 
 # compiled output
 /dist
