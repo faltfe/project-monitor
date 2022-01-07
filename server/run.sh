@@ -3,28 +3,25 @@
 set -e
 
 cd `dirname $0`
-r=`pwd`
-echo $r
+r=$(pwd)
+echo "$r"
 
-# Eureka
-cd $r/discovery-service
-echo "Starting Eureka Service..."
-mvn -q clean spring-boot:run &
 
-# Eureka
-cd $r/gateway
-echo "Starting Gateway Service..."
-mvn -q clean spring-boot:run &
+cd "$r"/discovery-service
+echo "Starting discovery service..."
+mvn -q clean spring-boot:run & echo $! > ./pid.file &
 
-# Beer Service
-echo "Starting Financial Service..."
-cd $r/financial-monitor
-mvn -q clean spring-boot:run &
+cd "$r"/gateway
+echo "Starting gateway..."
+mvn -q clean spring-boot:run & echo $! > ./pid.file &
 
-# Edge Service
-echo "Starting Vacation Service..."
-cd $r/vacation-monitor
-mvn -q clean spring-boot:run &
+echo "Starting financial service..."
+cd "$r"/financial-monitor
+mvn -q clean spring-boot:run & echo $! > ./pid.file &
+
+echo "Starting vacation service..."
+cd "$r"/vacation-monitor
+mvn -q clean spring-boot:run & echo $! > ./pid.file &
 
 # Client
 # cd $r/client
