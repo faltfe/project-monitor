@@ -12,6 +12,7 @@
     "lint:fix": "ng lint --fix",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "cypress:ci": "start-server-and-test start:prod http://localhost:4200 cypress:run",
     "postcypress:run": "node cucumber-html-report.js"
   },
   "private": true,
@@ -54,6 +55,7 @@
     "jest": "latest",
     "multiple-cucumber-html-reporter": "^1.18.3",
     "prettier": "^2.5.1",
+    "start-server-and-test": "^1.14.0",
     "typescript": "~4.5.2"
   },
   "cypress-cucumber-preprocessor": {
