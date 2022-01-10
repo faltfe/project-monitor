@@ -2,7 +2,7 @@ server:
     port: 8082
 spring:
     application:
-        name: finanical-monitor
+        name: financial-monitor
     datasource:
         username: ${POSTGRES_USER:root}
         password: ${POSTGRES_PASSWORD:password}
@@ -21,6 +21,8 @@ spring:
         show-sql: true
     main:
         banner-mode: 'off'
+    zipkin:
+        base-url: http://localhost:9411
 eureka:
     client:
         serviceUrl:

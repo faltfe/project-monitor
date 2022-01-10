@@ -7,11 +7,11 @@ spring:
     gateway:
       routes:
         - id: vacationModule
-          uri: lb://project-monitor
+          uri: lb://vacation-monitor
           predicates:
             - Path=/vacation/**
         - id: financialModule
-          uri: lb://finanical-monitor
+          uri: lb://financial-monitor
           predicates:
             - Path=/financial/**
 eureka:
