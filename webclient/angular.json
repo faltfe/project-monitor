@@ -111,7 +111,7 @@
           }
         },
         "cypress-run": {
-          "builder": "@briebug/cypress-schematic:cypress",
+          "builder": "@cypress/schematic:cypress",
           "options": {
             "devServerTarget": "webclient:serve"
           },
@@ -122,20 +122,14 @@
           }
         },
         "cypress-open": {
-          "builder": "@briebug/cypress-schematic:cypress",
+          "builder": "@cypress/schematic:cypress",
           "options": {
-            "devServerTarget": "webclient:serve",
             "watch": true,
             "headless": false
-          },
-          "configurations": {
-            "production": {
-              "devServerTarget": "webclient:serve:production"
-            }
           }
         },
         "e2e": {
-          "builder": "@briebug/cypress-schematic:cypress",
+          "builder": "@cypress/schematic:cypress",
           "options": {
             "devServerTarget": "webclient:serve",
             "watch": true,
