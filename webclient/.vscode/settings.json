@@ -1,0 +1,8 @@
+{
+  "editor.formatOnSave": true,
+  "files.eol": "\n",
+  "cucumberautocomplete.steps": ["cypress/support/step_definitions/*.ts"],
+  "cucumberautocomplete.syncfeatures": "cypress/integration/*.feature",
+  "cucumberautocomplete.strictGherkinCompletion": true,
+  "conventionalCommits.scopes": ["cypress"]
+}
