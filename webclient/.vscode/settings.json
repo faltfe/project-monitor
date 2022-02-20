@@ -1,6 +1,30 @@
 {
   "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true,
+    "source.fixAll.eslint": false
+  },
   "files.eol": "\n",
+  "files.autoSaveDelay": 1000,
+  "files.trimTrailingWhitespace": true,
+  "prettier.printWidth": 120,
+  "typescript.preferences.quoteStyle": "single",
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
   "cucumberautocomplete.steps": ["cypress/support/step_definitions/*.ts"],
   "cucumberautocomplete.syncfeatures": "cypress/integration/*.feature",
   "cucumberautocomplete.strictGherkinCompletion": true,
