@@ -5,6 +5,9 @@
 /cypress/cucumber-json
 /reports
 
+# Angular
+.angular
+
 # compiled output
 /dist
 /tmp
