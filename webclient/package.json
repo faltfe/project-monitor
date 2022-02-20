@@ -13,7 +13,8 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "cypress:ci": "start-server-and-test start:prod http://localhost:4200 cypress:run",
-    "postcypress:run": "node cucumber-html-report.js"
+    "postcypress:run": "node cucumber-html-report.js",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -41,8 +42,8 @@
     "@angular-eslint/template-parser": "13.0.1",
     "@angular/cli": "~13.1.2",
     "@angular/compiler-cli": "~13.1.0",
-    "@briebug/cypress-schematic": "^5.0.1",
     "@briebug/jest-schematic": "^4.0.0",
+    "@cypress/schematic": "^1.6.0",
     "@types/jest": "latest",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "5.3.0",
