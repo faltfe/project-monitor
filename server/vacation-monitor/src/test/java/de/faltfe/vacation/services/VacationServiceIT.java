@@ -5,9 +5,14 @@ import de.faltfe.vacation.entities.VacationEntry;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -19,7 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
-@DirtiesContext
+@Testcontainers
+@ActiveProfiles(profiles = {"standalone"})
 class VacationServiceIT {
 
     @Autowired
@@ -33,7 +39,6 @@ class VacationServiceIT {
 
     @Test
     @Transactional
-    @Disabled
     void vacationServiceTest() {
         Person person = personService.getPersons()
                                      .stream()
