@@ -1,0 +1,9 @@
+spring:
+    jpa:
+        properties:
+            javax:
+                persistence:
+                    schema-generation:
+                        create-source: metadata
+                        action: create
+                        create-target: create.sql

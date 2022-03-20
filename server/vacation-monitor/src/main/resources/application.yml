@@ -8,7 +8,6 @@ spring:
         password: ${POSTGRES_PASSWORD:password}
         url: jdbc:postgresql://localhost:5432/vacation-service
     jpa:
-        defer-datasource-initialization: true
         hibernate:
             ddl-auto: update
         properties:
@@ -23,6 +22,9 @@ spring:
         banner-mode: 'off'
     zipkin:
         base-url: http://localhost:9411
+    flyway:
+        table: flyway_schema_history
+        group: true
 eureka:
     client:
         serviceUrl:

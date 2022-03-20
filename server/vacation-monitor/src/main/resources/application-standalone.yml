@@ -1,0 +1,15 @@
+spring:
+    zipkin:
+        enabled: false
+    cloud:
+      service-registry:
+        auto-registration:
+            enabled: false
+    sleuth:
+        feign:
+            enabled: false
+eureka:
+    client:
+        enabled: false
+        fetch-registry: false
+        register-with-eureka: false
